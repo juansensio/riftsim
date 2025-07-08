@@ -10,45 +10,56 @@ RaylibRenderer::~RaylibRenderer() {
 
 void RaylibRenderer::init() {
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
-	InitWindow(1270, 720, "RIFTSIM");
-	// InitAudioDevice();
+    InitWindow(1270, 720, "RIFTSIM");
+    // InitAudioDevice();
     SetTargetFPS(60); 
+    _frame = 0;
+    _lastTime = GetTime();
+    _lag = 0.0f;
 }
 
-void RaylibRenderer::run() {
-    // #ifdef _DEBUG
-	// 	changeScene<ScenePlay>(SceneType::PLAY);
-	// 	// changeScene<SceneLoading>(SceneType::LOADING);
-	// #else
-	// 	changeScene<SceneLoading>(SceneType::LOADING);
-	// #endif
-	int frame = 0;
-	float lastTime = GetTime();
-	float lag = 0.0f;
-	// float SECONDS_PER_UPDATE = 1.0f / 60.0f; // fps
-    while (!WindowShouldClose())   
-    {
-		// inputs();
-		float currentTime = GetTime();
-		float deltaTime = currentTime - lastTime;
-		lastTime = currentTime;
-		lag += deltaTime;
-		int updates = 0;
-		// while (lag >= SECONDS_PER_UPDATE) {
-		// 	getCurrentScene().update(SECONDS_PER_UPDATE);
-		// 	lag -= SECONDS_PER_UPDATE;
-		// 	updates++;
-		// }
-		// if (updates == 0 && lag > 0.0f) {
-		// 	getCurrentScene().update(lag);
-		// 	lag = 0.0f;
-		// 	updates++;
-		// }
-		frame += 1;
-		BeginDrawing();
-        ClearBackground(BLACK);
-		// getCurrentScene().render();
-        EndDrawing();
+bool RaylibRenderer::render() {
+    const float SECONDS_PER_UPDATE = 1.0f / 60.0f; // 60 FPS target
+    
+    if (WindowShouldClose()) {
+        CloseWindow();
+        return false;
+    }   
+    
+    // Handle input (uncomment when ready)
+    // inputs();
+    
+    // Calculate delta time
+    float currentTime = GetTime();
+    float deltaTime = currentTime - _lastTime;
+    _lastTime = currentTime;
+    
+    // Accumulate lag for fixed timestep updates
+    _lag += deltaTime;
+    
+    // Run fixed timestep updates
+    int updates = 0;
+    while (_lag >= SECONDS_PER_UPDATE) {
+        // getCurrentScene().update(SECONDS_PER_UPDATE);
+        _lag -= SECONDS_PER_UPDATE;
+        updates++;
     }
-    CloseWindow();  
+    
+    // Handle remaining lag (spiral of death prevention)
+    if (updates == 0 && _lag > 0.0f) {
+        // getCurrentScene().update(_lag);
+        _lag = 0.0f;
+        updates++;
+    }
+    
+    // Increment frame counter
+    _frame++;
+    
+    // Render frame
+    BeginDrawing();
+    ClearBackground(BLACK);
+    // getCurrentScene().render();
+    EndDrawing();
+
+    return true;
 }

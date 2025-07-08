@@ -6,10 +6,15 @@
 #include "BaseRenderer.h"
 
 class RaylibRenderer : public BaseRenderer {
+private:
+    int _frame;
+    float _lastTime;
+    float _lag;
+    
 public:
     RaylibRenderer();
     ~RaylibRenderer();
 
     void init();
-    void run();
+    bool render();
 };

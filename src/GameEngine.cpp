@@ -34,7 +34,12 @@ void GameEngine::init(int rendererChoice) {
 }
 
 void GameEngine::run() {
-	_renderer->run();                
+	while (true) {
+		bool should_continue = _renderer->render();   
+		if (!should_continue) {
+			break;
+		}
+	}             
 }
 
 // void GameEngine::inputs() {

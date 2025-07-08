@@ -10,7 +10,7 @@ public:
         // Default implementation does nothing
     }
     
-    virtual void run() {
+    virtual bool render() {
         // Default implementation does nothing
     }
 }; 
