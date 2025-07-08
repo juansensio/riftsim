@@ -1,2 +1,3 @@
 # riftsim
-riftbound simulator
+
+A Riftbound Simulator.
