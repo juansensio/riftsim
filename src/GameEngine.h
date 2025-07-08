@@ -2,9 +2,8 @@
 
 #include <map>
 
-// #include "Assets.h"
+#include "Assets.h"
 #include "scenes/Scenes.h"
-// #include "Physics.h"
 // #include "GameState.h"
 
 #include "renderers/BaseRenderer.h"
@@ -20,7 +19,7 @@ private:
     
     SceneMap         _scenes;
     SceneType        _current_scene;
-    // Assets           _assets;
+    Assets           _assets;
     // GameState        _game_state;
 
     bool             _should_quit = false;
@@ -38,7 +37,7 @@ public:
     // void restart();
 
     Scene& getCurrentScene() { return *_scenes.at(_current_scene); }
-    // Assets& getAssets() { return _assets; }
+    Assets& getAssets() { return _assets; }
     
     template<typename T> 
     void changeScene(const SceneType& sceneType) {

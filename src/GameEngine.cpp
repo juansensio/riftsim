@@ -31,8 +31,9 @@ void GameEngine::init(int rendererChoice) {
     }
     
     _renderer->init();
+    _assets.load();
 
-    changeScene<SceneMenu>(SceneType::MENU);
+    changeScene<SceneDecks>(SceneType::DECKS);
 }
 
 void GameEngine::run() {

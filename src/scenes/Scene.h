@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-// #include "entities/EntityManager.h"
+#include "entities/EntityManager.h"
 // #include "Actions.h"
 
 class GameEngine;
@@ -13,7 +13,7 @@ class GameEngine;
 class Scene {
 protected:
 	GameEngine& 				_game_engine;
-	// EntityManager 				_entity_manager;
+	EntityManager 				_entity_manager;
 	// ActionMap					_action_map;
 
 public:
@@ -29,5 +29,5 @@ public:
 	// void registerAction(int key, const ActionName& name) {_action_map[key] = name;}
 	// const ActionMap& getActionMap() const { return _action_map; }
 
-	// EntityManager& getEntityManager() { return _entity_manager; }
+	EntityManager& getEntityManager() { return _entity_manager; }
 };

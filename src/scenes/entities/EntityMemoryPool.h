@@ -13,23 +13,14 @@
 
 enum EntityType {
 	DEFAULT_ENTITY = -1,
-	PLAYER = 0,
-	ENEMY = 1,
-	BALL = 2,
-	WALL = 3,
-	GOAL = 4,
-	DEATH = 5,
+	CARD = 0,
 };
 
 // tupla de vectores de componentes para que los componentes estén contiguos en memoria
 
 using EntityComponentVectorTuple = std::tuple<
-	std::vector<CTransform>,
-	std::vector<CCircleShape>,
-	std::vector<CRectShape>,
-	std::vector<CInput>,
-	std::vector<CBoundingBox>,
-	std::vector<CAI>
+	std::vector<CLife>,
+	std::vector<CSprite>
 >;
 
 const size_t MAX_ENTITIES = 100; // si se supera, se debe redimensionar el pool
@@ -46,12 +37,8 @@ class EntityMemoryPool {
 		_tags(num_entities, EntityType::DEFAULT_ENTITY),
 		_active(num_entities, false)
 	{
-		std::get<std::vector<CTransform>>(_pool).resize(num_entities);
-		std::get<std::vector<CCircleShape>>(_pool).resize(num_entities);
-		std::get<std::vector<CRectShape>>(_pool).resize(num_entities);
-		std::get<std::vector<CInput>>(_pool).resize(num_entities);
-		std::get<std::vector<CBoundingBox>>(_pool).resize(num_entities);
-		std::get<std::vector<CAI>>(_pool).resize(num_entities);
+		std::get<std::vector<CLife>>(_pool).resize(num_entities);
+		std::get<std::vector<CSprite>>(_pool).resize(num_entities);
 	}
 
 	friend class EntityManager;
