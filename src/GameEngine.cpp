@@ -31,16 +31,22 @@ void GameEngine::init(int rendererChoice) {
     }
     
     _renderer->init();
+
+    changeScene<SceneMenu>(SceneType::MENU);
 }
 
 void GameEngine::run() {
 	while (true) {
 		bool should_continue = _renderer->render();   
-		if (!should_continue) {
+		if (!should_continue || _should_quit) {
 			break;
 		}
 	}             
 }
+
+void GameEngine::update(const float& elapsed) {
+    getCurrentScene().update();
+}   
 
 // void GameEngine::inputs() {
 // 	for (auto& [key, action]: getCurrentScene().getActionMap())

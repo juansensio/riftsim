@@ -1,4 +1,5 @@
 #include "RaylibRenderer.h"
+#include "../GameEngine.h"
 
 RaylibRenderer::RaylibRenderer() {
     // Constructor implementation
@@ -40,14 +41,14 @@ bool RaylibRenderer::render() {
     // Run fixed timestep updates
     int updates = 0;
     while (_lag >= SECONDS_PER_UPDATE) {
-        // getCurrentScene().update(SECONDS_PER_UPDATE);
+        GameEngine::instance().update(SECONDS_PER_UPDATE);
         _lag -= SECONDS_PER_UPDATE;
         updates++;
     }
     
     // Handle remaining lag (spiral of death prevention)
     if (updates == 0 && _lag > 0.0f) {
-        // getCurrentScene().update(_lag);
+        GameEngine::instance().update(_lag);
         _lag = 0.0f;
         updates++;
     }
@@ -58,7 +59,7 @@ bool RaylibRenderer::render() {
     // Render frame
     BeginDrawing();
     ClearBackground(BLACK);
-    // getCurrentScene().render();
+    GameEngine::instance().getCurrentScene().render();
     EndDrawing();
 
     return true;
